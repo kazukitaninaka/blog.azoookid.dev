@@ -1,23 +1,17 @@
-import type { NextPage } from "next";
 import { Client } from "@notionhq/client";
 import ArticleCard from "../components/ArticleCard";
 import { convertDate } from "../utils";
 
-type Props = {};
-
-const Home: NextPage = ({ articles }) => {
-  console.log(articles);
+const Home = ({ articles }) => {
   return (
     <div>
-      <div></div>
       {articles.map((article) => (
-        <div className="my-10">
-          <ArticleCard
-            title={article.title}
-            createdAt={article.createdAt}
-            id={article.id}
-          />
-        </div>
+        <ArticleCard
+          key={article.id}
+          title={article.title}
+          createdAt={article.createdAt}
+          id={article.id}
+        />
       ))}
     </div>
   );
@@ -28,7 +22,7 @@ export async function getStaticProps() {
 
   const databaseId = process.env.NOTION_DATABASE_ID;
   const response = await notion.databases.query({
-    database_id: databaseId!,
+    database_id: databaseId,
   });
   console.log(response);
   const articles = response.results.map((article) => {

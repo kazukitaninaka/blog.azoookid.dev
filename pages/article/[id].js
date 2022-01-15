@@ -48,25 +48,25 @@ export async function getServerSideProps({ params }) {
         return {
           id: block.id,
           type: block.type,
-          text: (block as any).heading_2.text[0]?.plain_text || null,
+          text: block.heading_2.text[0]?.plain_text || null,
         };
       case "heading_3":
         return {
           id: block.id,
           type: block.type,
-          text: (block as any).heading_3.text[0]?.plain_text || null,
+          text: block.heading_3.text[0]?.plain_text || null,
         };
       case "paragraph":
         return {
           id: block.id,
           type: block.type,
-          text: (block as any).paragraph.text[0]?.plain_text || null,
+          text: block.paragraph.text[0]?.plain_text || null,
         };
       case "bulleted_list_item":
         return {
           id: block.id,
           type: block.type,
-          text: (block as any).bulleted_list_item.text[0]?.plain_text || null,
+          text: block.bulleted_list_item.text[0]?.plain_text || null,
         };
       default:
         return {

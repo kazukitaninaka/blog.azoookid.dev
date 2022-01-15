@@ -1,13 +1,6 @@
-import { NextPage } from "next";
 import Link from "next/link";
 
-type Props = {
-  title: string;
-  createdAt: string;
-  id: string;
-};
-
-export default function ArticleCard({ title, createdAt, id }): NextPage<Props> {
+export default function ArticleCard({ title, createdAt, id }) {
   return (
     <div style={{ margin: "20px" }}>
       <Link href={`article/${id}`}>
