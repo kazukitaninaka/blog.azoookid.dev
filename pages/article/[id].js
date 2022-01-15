@@ -24,27 +24,7 @@ export default function index({ articleTitle, articleCreatedAt, blocks }) {
   );
 }
 
-export async function getStaticPaths() {
-  const notion = new Client({ auth: process.env.NOTION_KEY });
-
-  const databaseId = process.env.NOTION_DATABASE_ID;
-  const response = await notion.databases.query({
-    database_id: databaseId,
-  });
-
-  const ids = response.results.map((article) => {
-    return {
-      params: { id: article.id },
-    };
-  });
-
-  return {
-    paths: ids,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const notion = new Client({
     auth: process.env.NOTION_KEY,
   });
