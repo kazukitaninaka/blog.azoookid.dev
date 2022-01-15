@@ -29,20 +29,22 @@ export async function getServerSideProps({ params }) {
     auth: process.env.NOTION_KEY,
   });
 
-  const articlePageResponse = await notion.pages.retrieve({
+  const articlePageResponse = notion.pages.retrieve({
     page_id: params.id,
   });
-  console.log(articlePageResponse);
-  const articleTitle = articlePageResponse.properties.page.title[0].plain_text;
-  const articleCreatedAt = convertDate(
-    articlePageResponse.properties.createdAt.created_time
-  );
 
-  const blocksChildren = await notion.blocks.children.list({
+  const blocksResponse = notion.blocks.children.list({
     block_id: params.id,
   });
 
-  const blocks = blocksChildren.results.map((block) => {
+  const responses = await Promise.all([articlePageResponse, blocksResponse]);
+
+  const articleTitle = responses[0].properties.page.title[0].plain_text;
+  const articleCreatedAt = convertDate(
+    responses[0].properties.createdAt.created_time
+  );
+
+  const blocks = responses[1].results.map((block) => {
     switch (block.type) {
       case "heading_2":
         return {

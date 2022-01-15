@@ -24,7 +24,7 @@ export async function getServerSideProps() {
   const response = await notion.databases.query({
     database_id: databaseId,
   });
-  console.log(response);
+
   const articles = response.results.map((article) => {
     return {
       title: article.properties.page.title[0].plain_text,
