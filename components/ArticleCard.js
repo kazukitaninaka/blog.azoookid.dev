@@ -1,9 +1,7 @@
-import Link from "next/link";
-
 export default function ArticleCard({ title, createdAt, id }) {
   return (
     <div style={{ margin: "20px" }}>
-      <Link href={`article/${id}`}>
+      <a href={`article/${id}`}>
         <div
           style={{
             fontSize: "1.5rem",
@@ -14,7 +12,7 @@ export default function ArticleCard({ title, createdAt, id }) {
         >
           {title}
         </div>
-      </Link>
+      </a>
       <div>{createdAt}公開</div>
     </div>
   );

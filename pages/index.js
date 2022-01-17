@@ -4,7 +4,7 @@ import { convertDate } from "../utils";
 
 const Home = ({ articles }) => {
   return (
-    <div>
+    <>
       {articles.map((article) => (
         <ArticleCard
           key={article.id}
@@ -13,7 +13,7 @@ const Home = ({ articles }) => {
           id={article.id}
         />
       ))}
-    </div>
+    </>
   );
 };
 
