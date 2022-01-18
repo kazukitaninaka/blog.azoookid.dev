@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export default function ArticleCard({ title, createdAt, id }) {
   return (
     <div style={{ margin: "20px" }}>
-      <a href={`article/${id}`}>
+      <Link href={`article/${id}`} passHref>
         <div
           style={{
             fontSize: "1.5rem",
@@ -12,7 +14,7 @@ export default function ArticleCard({ title, createdAt, id }) {
         >
           {title}
         </div>
-      </a>
+      </Link>
       <div>{createdAt}公開</div>
     </div>
   );
