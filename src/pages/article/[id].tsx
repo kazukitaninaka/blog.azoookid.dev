@@ -1,4 +1,4 @@
-import { Client } from "@notionhq/client";
+import { client } from "../../notionClient";
 import { convertDate } from "../../utils";
 import Image from "next/image";
 
@@ -54,10 +54,8 @@ export default function index({
 }
 
 export async function getStaticPaths() {
-  const notion = new Client({ auth: process.env.NOTION_KEY });
-
   const databaseId = process.env.NOTION_DATABASE_ID;
-  const response = await notion.databases.query({
+  const response = await client.databases.query({
     database_id: databaseId,
   });
 
@@ -73,15 +71,11 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const notion = new Client({
-    auth: process.env.NOTION_KEY,
-  });
-
-  const articlePageResponse = notion.pages.retrieve({
+  const articlePageResponse = client.pages.retrieve({
     page_id: params.id,
   });
 
-  const blocksResponse = notion.blocks.children.list({
+  const blocksResponse = client.blocks.children.list({
     block_id: params.id,
   });
 

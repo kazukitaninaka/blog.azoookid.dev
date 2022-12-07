@@ -1,4 +1,4 @@
-import { Client } from "@notionhq/client";
+import { client } from "../notionClient";
 import ArticleCard from "../components/ArticleCard";
 import { convertDate } from "../utils";
 
@@ -18,10 +18,8 @@ const Home = ({ articles }) => {
 };
 
 export async function getStaticProps() {
-  const notion = new Client({ auth: process.env.NOTION_KEY });
-
   const databaseId = process.env.NOTION_DATABASE_ID;
-  const response = await notion.databases.query({
+  const response = await client.databases.query({
     database_id: databaseId,
   });
 
