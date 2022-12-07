@@ -4,7 +4,7 @@ export default function ArticleCard({ title, createdAt, id }) {
   return (
     <div style={{ margin: "20px" }}>
       <Link href={`article/${id}`} passHref>
-        <div
+        <h1
           style={{
             fontSize: "1.5rem",
             textDecorationLine: "underline",
@@ -13,7 +13,7 @@ export default function ArticleCard({ title, createdAt, id }) {
           }}
         >
           {title}
-        </div>
+        </h1>
       </Link>
       <div>{createdAt}公開</div>
     </div>
