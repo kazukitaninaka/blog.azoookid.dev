@@ -19,11 +19,11 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/_app.tsx",
-    "pages/index.tsx",
-    "pages/article/[id].tsx",
-    "components/Layout.tsx",
-    "components/ArticleCard.tsx"
+    "src/pages/_app.tsx",
+    "src/pages/index.tsx",
+    "src/pages/article/[id].tsx",
+    "src/components/Layout.tsx",
+    "src/components/ArticleCard.tsx"
   ],
   "exclude": ["node_modules"]
 }
