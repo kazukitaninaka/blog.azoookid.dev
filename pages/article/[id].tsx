@@ -1,5 +1,6 @@
 import { Client } from "@notionhq/client";
 import { convertDate } from "../../utils";
+import Image from "next/image";
 
 export default function index({ articleTitle, articleCreatedAt, blocks }) {
   return (
@@ -16,6 +17,16 @@ export default function index({ articleTitle, articleCreatedAt, blocks }) {
             return <p key={block.id}>{block.text}</p>;
           case "bulleted_list_item":
             return <p key={block.id}>・{block.text}</p>;
+          case "image":
+            return (
+              <Image
+                key={block.id}
+                src={block.text}
+                alt=""
+                width={50}
+                layout="fill"
+              />
+            );
           default:
             null;
         }
@@ -70,6 +81,13 @@ export async function getServerSideProps({ params }) {
           type: block.type,
           text: block.bulleted_list_item.text[0]?.plain_text || null,
         };
+      case "image": {
+        return {
+          id: block.id,
+          type: block.type,
+          text: block.image.file.url || null,
+        };
+      }
       default:
         return {
           id: block.id,
