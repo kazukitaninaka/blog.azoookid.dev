@@ -19,14 +19,14 @@ export default function index({
 }: Props) {
   return (
     <div>
-      <h2 style={{ textAlign: "center" }}>{articleTitle}</h2>
+      <h1 style={{ textAlign: "center" }}>{articleTitle}</h1>
       <p style={{ textAlign: "center" }}>{articleCreatedAt}公開</p>
       {blocks.map((block) => {
         switch (block.type) {
           case "heading_2":
             return <h2 key={block.id}>{block.text}</h2>;
           case "heading_3":
-            return <h2 key={block.id}>{block.text}</h2>;
+            return <h3 key={block.id}>{block.text}</h3>;
           case "paragraph":
             return <p key={block.id}>{block.text}</p>;
           case "bulleted_list_item":
