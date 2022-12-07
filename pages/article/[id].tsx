@@ -2,7 +2,21 @@ import { Client } from "@notionhq/client";
 import { convertDate } from "../../utils";
 import Image from "next/image";
 
-export default function index({ articleTitle, articleCreatedAt, blocks }) {
+type Props = {
+  articleTitle: string;
+  articleCreatedAt: string;
+  blocks: {
+    id: string;
+    type: string;
+    text: string;
+  }[];
+};
+
+export default function index({
+  articleTitle,
+  articleCreatedAt,
+  blocks,
+}: Props) {
   return (
     <div>
       <h2 style={{ textAlign: "center" }}>{articleTitle}</h2>
@@ -19,13 +33,17 @@ export default function index({ articleTitle, articleCreatedAt, blocks }) {
             return <p key={block.id}>・{block.text}</p>;
           case "image":
             return (
-              <Image
-                key={block.id}
-                src={block.text}
-                alt=""
-                width={50}
-                layout="fill"
-              />
+              <div
+                style={{ width: "100%", height: "300px", position: "relative" }}
+              >
+                <Image
+                  key={block.id}
+                  src={block.text}
+                  alt=""
+                  layout="fill"
+                  objectFit="contain"
+                />
+              </div>
             );
           default:
             null;
@@ -79,7 +97,7 @@ export async function getServerSideProps({ params }) {
         return {
           id: block.id,
           type: block.type,
-          text: block.bulleted_list_item.text[0]?.plain_text || null,
+          text: block.bulleted_list_item?.text[0]?.plain_text || null,
         };
       case "image": {
         return {
