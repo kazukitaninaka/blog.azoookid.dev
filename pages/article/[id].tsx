@@ -53,7 +53,26 @@ export default function index({
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
+  const notion = new Client({ auth: process.env.NOTION_KEY });
+
+  const databaseId = process.env.NOTION_DATABASE_ID;
+  const response = await notion.databases.query({
+    database_id: databaseId,
+  });
+
+  const paths = response.results.map((article) => {
+    return {
+      params: {
+        id: article.id,
+      },
+    };
+  });
+
+  return { paths, fallback: "blocking" };
+}
+
+export async function getStaticProps({ params }) {
   const notion = new Client({
     auth: process.env.NOTION_KEY,
   });
@@ -121,5 +140,6 @@ export async function getServerSideProps({ params }) {
       articleCreatedAt,
       blocks,
     },
+    revalidate: 60 * 60 * 12, //12時間ごと
   };
 }

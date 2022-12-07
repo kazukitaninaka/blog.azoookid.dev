@@ -17,7 +17,7 @@ const Home = ({ articles }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const notion = new Client({ auth: process.env.NOTION_KEY });
 
   const databaseId = process.env.NOTION_DATABASE_ID;
@@ -36,6 +36,7 @@ export async function getServerSideProps() {
     props: {
       articles,
     },
+    revalidate: 60 * 60 * 12, //12時間ごと
   };
 }
 
