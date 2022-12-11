@@ -1,10 +1,15 @@
 import { client } from "../../notionClient";
 import { convertDate } from "../../utils";
 import Image from "next/image";
+import { Tag } from "../../types";
+import Tags from "../../components/Tags";
 
 type Props = {
-  articleTitle: string;
-  articleCreatedAt: string;
+  articleInfo: {
+    title: string;
+    createdAt: string;
+    tags: Tag[];
+  };
   blocks: {
     id: string;
     type: string;
@@ -12,21 +17,18 @@ type Props = {
   }[];
 };
 
-export default function index({
-  articleTitle,
-  articleCreatedAt,
-  blocks,
-}: Props) {
+export default function index({ articleInfo, blocks }: Props) {
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>{articleTitle}</h1>
-      <p style={{ textAlign: "center" }}>{articleCreatedAt}公開</p>
+      <h1 style={{ textAlign: "center" }}>{articleInfo.title}</h1>
+      <p style={{ textAlign: "center" }}>{articleInfo.createdAt}公開</p>
+      <Tags tags={articleInfo.tags} />
       {blocks.map((block) => {
         switch (block.type) {
           case "heading_2":
-            return <h2 key={block.id}>{block.text}</h2>;
+            return <h2 key={block.id}>## {block.text}</h2>;
           case "heading_3":
-            return <h3 key={block.id}>{block.text}</h3>;
+            return <h3 key={block.id}>### {block.text}</h3>;
           case "paragraph":
             return <p key={block.id}>{block.text}</p>;
           case "bulleted_list_item":
@@ -80,11 +82,16 @@ export async function getStaticProps({ params }) {
   });
 
   const responses = await Promise.all([articlePageResponse, blocksResponse]);
+  console.log(responses[0].properties.tag.multi_select);
 
-  const articleTitle = responses[0].properties.page.title[0].plain_text;
-  const articleCreatedAt = convertDate(
-    responses[0].properties.createdAt.created_time
-  );
+  const articleInfo = {
+    title: responses[0].properties.page.title[0].plain_text,
+    createdAt: convertDate(responses[0].properties.createdAt.created_time),
+    tags: responses[0].properties.tag.multi_select.map((tag) => ({
+      id: tag.id,
+      name: tag.name,
+    })),
+  };
 
   const blocks = responses[1].results.map((block) => {
     switch (block.type) {
@@ -130,8 +137,7 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      articleTitle,
-      articleCreatedAt,
+      articleInfo,
       blocks,
     },
     revalidate: 60 * 60 * 12, //12時間ごと
