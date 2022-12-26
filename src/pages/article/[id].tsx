@@ -82,7 +82,6 @@ export async function getStaticProps({ params }) {
   });
 
   const responses = await Promise.all([articlePageResponse, blocksResponse]);
-  console.log(responses[0].properties.tag.multi_select);
 
   const articleInfo = {
     title: responses[0].properties.page.title[0].plain_text,
