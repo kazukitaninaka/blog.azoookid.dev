@@ -9,3 +9,13 @@ export const container = style({
     },
   },
 });
+
+export const header = style({
+  borderBottom: "1px solid #000",
+});
+
+export const linkContainer = style({
+  margin: "20px",
+  fontSize: "2rem",
+  fontWeight: "bold",
+});

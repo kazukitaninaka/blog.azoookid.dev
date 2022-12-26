@@ -4,8 +4,8 @@ import * as styles from "./Layout.css";
 export default function Layout({ children }) {
   return (
     <div>
-      <header style={{ borderBottom: "1px solid #000" }}>
-        <div style={{ margin: "20px", fontSize: "2rem", fontWeight: "bold" }}>
+      <header className={styles.header}>
+        <div className={styles.linkContainer}>
           <Link href="/">blog.azoookid.dev</Link>
         </div>
       </header>
