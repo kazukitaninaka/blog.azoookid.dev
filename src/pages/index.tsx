@@ -23,13 +23,16 @@ export async function getStaticProps() {
     database_id: databaseId,
   });
 
-  const articles = response.results.map((article) => {
-    return {
-      title: article.properties.page.title[0].plain_text,
-      createdAt: convertDate(article.created_time),
-      id: article.id,
-    };
-  });
+  const articles = response.results
+    // isCompletedがtrueの記事だけを取得
+    .filter((article) => article.properties.isCompleted.checkbox)
+    .map((article) => {
+      return {
+        title: article.properties.page.title[0].plain_text,
+        createdAt: convertDate(article.created_time),
+        id: article.id,
+      };
+    });
   return {
     props: {
       articles,
