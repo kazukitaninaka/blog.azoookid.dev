@@ -1,5 +1,5 @@
 import Tag from "./Tag";
-import { Tag as TagType } from "../types";
+import { Tag as TagType } from "../../types";
 
 type Props = {
   tags: TagType[];

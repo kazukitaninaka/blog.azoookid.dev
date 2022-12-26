@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Tag } from "../types";
+import { Tag } from "../../types";
 
 type Props = {
   tag: Tag;

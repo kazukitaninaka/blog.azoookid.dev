@@ -22,8 +22,8 @@
     "src/pages/_app.tsx",
     "src/pages/index.tsx",
     "src/pages/article/[id].tsx",
-    "src/components/Layout.tsx",
-    "src/components/ArticleCard.tsx"
+    "src/components/common/Layout.tsx",
+    "src/components/top/ArticleCard.tsx"
   ],
   "exclude": ["node_modules"]
 }

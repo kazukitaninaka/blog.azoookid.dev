@@ -1,8 +1,7 @@
 import { client } from "../../notionClient";
 import { convertDate } from "../../utils";
-import Image from "next/image";
 import { Tag } from "../../types";
-import Tags from "../../components/Tags";
+import Article from "../../components/article/Article";
 
 type Props = {
   articleInfo: {
@@ -18,41 +17,7 @@ type Props = {
 };
 
 export default function index({ articleInfo, blocks }: Props) {
-  return (
-    <div>
-      <h1 style={{ textAlign: "center" }}>{articleInfo.title}</h1>
-      <p style={{ textAlign: "center" }}>{articleInfo.createdAt}公開</p>
-      <Tags tags={articleInfo.tags} />
-      {blocks.map((block) => {
-        switch (block.type) {
-          case "heading_2":
-            return <h2 key={block.id}>## {block.text}</h2>;
-          case "heading_3":
-            return <h3 key={block.id}>### {block.text}</h3>;
-          case "paragraph":
-            return <p key={block.id}>{block.text}</p>;
-          case "bulleted_list_item":
-            return <p key={block.id}>・{block.text}</p>;
-          case "image":
-            return (
-              <div
-                style={{ width: "100%", height: "300px", position: "relative" }}
-              >
-                <Image
-                  key={block.id}
-                  src={block.text}
-                  alt=""
-                  layout="fill"
-                  objectFit="contain"
-                />
-              </div>
-            );
-          default:
-            null;
-        }
-      })}
-    </div>
-  );
+  return <Article articleInfo={articleInfo} blocks={blocks} />;
 }
 
 export async function getStaticPaths() {

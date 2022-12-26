@@ -1,5 +1,5 @@
 import { client } from "../notionClient";
-import ArticleCard from "../components/ArticleCard";
+import ArticleCard from "../components/top/ArticleCard";
 import { convertDate } from "../utils";
 
 const Home = ({ articles }) => {
