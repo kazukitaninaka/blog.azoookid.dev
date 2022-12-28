@@ -2,12 +2,15 @@ import { client } from "../../notionClient";
 import { convertDate } from "../../utils";
 import { Tag } from "../../types";
 import Article from "../../components/article/Article";
+import Head from "next/head";
 
 type Props = {
   articleInfo: {
+    id: string;
     title: string;
     createdAt: string;
     tags: Tag[];
+    thumbnail: string;
   };
   blocks: {
     id: string;
@@ -17,7 +20,22 @@ type Props = {
 };
 
 export default function index({ articleInfo, blocks }: Props) {
-  return <Article articleInfo={articleInfo} blocks={blocks} />;
+  return (
+    <>
+      <Head>
+        <title>{articleInfo.title}</title>
+        <meta property="og:title" content={articleInfo.title} />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://blog.azoookid.dev/article/${articleInfo.id}`}
+        />
+        <meta property="og:image" content={articleInfo.thumbnail} />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
+      <Article articleInfo={articleInfo} blocks={blocks} />;
+    </>
+  );
 }
 
 export async function getStaticPaths() {
@@ -48,13 +66,20 @@ export async function getStaticProps({ params }) {
 
   const responses = await Promise.all([articlePageResponse, blocksResponse]);
 
+  const { properties, cover } = responses[0];
+
   const articleInfo = {
-    title: responses[0].properties.page.title[0].plain_text,
-    createdAt: convertDate(responses[0].properties.createdAt.created_time),
-    tags: responses[0].properties.tag.multi_select.map((tag) => ({
+    id: properties.page.id,
+    title: properties.page.title[0].plain_text,
+    createdAt: convertDate(properties.createdAt.created_time),
+    tags: properties.tag.multi_select.map((tag) => ({
       id: tag.id,
       name: tag.name,
     })),
+    thumbnail:
+      cover.type == "file"
+        ? cover.file.url
+        : (cover.type = "external" ? cover.external.url : ""),
   };
 
   const blocks = responses[1].results.map((block) => {

@@ -3,14 +3,19 @@ import ArticleCard from "../components/top/ArticleCard";
 import { convertDate } from "../utils";
 import { Article } from "../types";
 import { NextPage } from "next";
+import Head from "next/head";
 
 type Props = {
   articles: Article[];
 };
 
 const Home: NextPage<Props> = ({ articles }) => {
+  const title = "blog.azoookid.dev";
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
       {articles.map((article) => (
         <ArticleCard key={article.id} article={article} />
       ))}
