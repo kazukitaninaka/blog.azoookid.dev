@@ -1,17 +1,18 @@
 import { client } from "../notionClient";
 import ArticleCard from "../components/top/ArticleCard";
 import { convertDate } from "../utils";
+import { Article } from "../types";
+import { NextPage } from "next";
 
-const Home = ({ articles }) => {
+type Props = {
+  articles: Article[];
+};
+
+const Home: NextPage<Props> = ({ articles }) => {
   return (
     <>
       {articles.map((article) => (
-        <ArticleCard
-          key={article.id}
-          title={article.title}
-          createdAt={article.createdAt}
-          id={article.id}
-        />
+        <ArticleCard key={article.id} article={article} />
       ))}
     </>
   );
@@ -22,17 +23,23 @@ export async function getStaticProps() {
   const response = await client.databases.query({
     database_id: databaseId,
   });
-
+  console.log(response.results[1].cover);
   const articles = response.results
     // isCompletedがtrueの記事だけを取得
     .filter((article) => article.properties.isCompleted.checkbox)
     .map((article) => {
+      const { cover } = article;
       return {
         title: article.properties.page.title[0].plain_text,
         createdAt: convertDate(article.created_time),
         id: article.id,
+        thumbnail:
+          cover.type == "file"
+            ? cover.file.url
+            : (cover.type = "external" ? cover.external.url : ""),
       };
     });
+
   return {
     props: {
       articles,
