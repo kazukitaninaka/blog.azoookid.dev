@@ -33,7 +33,7 @@ export default function index({ articleInfo, blocks }: Props) {
         <meta property="og:image" content={articleInfo.thumbnail} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Article articleInfo={articleInfo} blocks={blocks} />;
+      <Article articleInfo={articleInfo} blocks={blocks} />
     </>
   );
 }
