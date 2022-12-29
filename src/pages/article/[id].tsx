@@ -23,7 +23,7 @@ export default function index({ articleInfo, blocks }: Props) {
   return (
     <>
       <Head>
-        <title>{articleInfo.title}</title>
+        <title>{articleInfo.title} - blog.azoookid.dev</title>
         <meta property="og:title" content={articleInfo.title} />
         <meta property="og:type" content="website" />
         <meta
