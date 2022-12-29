@@ -49,7 +49,7 @@ export async function getStaticProps() {
     props: {
       articles,
     },
-    revalidate: 60 * 60 * 12, //12時間ごと
+    revalidate: 60 * 60, //1時間ごと。notionのfileが1時間で期限切れするため。
   };
 }
 
