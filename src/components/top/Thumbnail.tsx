@@ -7,7 +7,6 @@ type Props = {
 };
 
 const Thumbnail: React.VFC<Props> = ({ src }) => {
-  console.log({ src });
   return (
     <div className={styles.imageContainer}>
       <Image src={src} alt="thumbnail" layout="fill" objectFit="cover" />

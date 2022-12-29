@@ -28,7 +28,7 @@ export async function getStaticProps() {
   const response = await client.databases.query({
     database_id: databaseId,
   });
-  console.log(response.results[1].cover);
+
   const articles = response.results
     // isCompletedがtrueの記事だけを取得
     .filter((article) => article.properties.isCompleted.checkbox)
