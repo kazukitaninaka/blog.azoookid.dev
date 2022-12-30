@@ -1,7 +1,6 @@
 import ArticleComponent from "../../components/article/Article";
 import Head from "next/head";
 import { getAllArticles, getArticleBySlug } from "../../lib/api";
-import markdownToHtml from "../../lib/markdownToHtml";
 import { useRouter } from "next/router";
 
 type Props = {
@@ -72,14 +71,9 @@ export async function getStaticProps({ params }: Params) {
     "content",
   ]);
 
-  const content = await markdownToHtml(article.content || "");
-
   return {
     props: {
-      article: {
-        ...article,
-        content,
-      },
+      article,
     },
   };
 }
