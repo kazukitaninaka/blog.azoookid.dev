@@ -41,7 +41,6 @@ const components: Components = {
       node.children[0].tagName === "img"
     ) {
       const image = node.children[0];
-      console.log(image);
       const metastring = image.properties.alt as string;
       const alt = metastring?.replace(/ *\{[^)]*\} */g, "");
       const isPriority = metastring?.toLowerCase().match("{priority}");
