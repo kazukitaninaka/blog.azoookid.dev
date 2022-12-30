@@ -1,9 +1,8 @@
-import { client } from "../notionClient";
-import ArticleCard from "../components/top/ArticleCard";
-import { convertDate } from "../utils";
-import { Article } from "../types";
 import { NextPage } from "next";
 import Head from "next/head";
+import ArticleCard from "../components/top/ArticleCard";
+import { getAllArticles } from "../lib/api";
+import { Article } from "../types";
 
 type Props = {
   articles: Article[];
@@ -17,39 +16,18 @@ const Home: NextPage<Props> = ({ articles }) => {
         <title>{title}</title>
       </Head>
       {articles.map((article) => (
-        <ArticleCard key={article.id} article={article} />
+        <ArticleCard key={article.slug} article={article} />
       ))}
     </>
   );
 };
 
 export async function getStaticProps() {
-  const databaseId = process.env.NOTION_DATABASE_ID;
-  const response = await client.databases.query({
-    database_id: databaseId,
-  });
-
-  const articles = response.results
-    // isCompletedがtrueの記事だけを取得
-    .filter((article) => article.properties.isCompleted.checkbox)
-    .map((article) => {
-      const { cover } = article;
-      return {
-        title: article.properties.page.title[0].plain_text,
-        createdAt: convertDate(article.created_time),
-        id: article.id,
-        thumbnail:
-          cover.type == "file"
-            ? cover.file.url
-            : (cover.type = "external" ? cover.external.url : ""),
-      };
-    });
-
+  const articles = getAllArticles(["title", "createdAt", "thumbnail", "slug"]);
   return {
     props: {
       articles,
     },
-    revalidate: 60 * 60, //1時間ごと。notionのfileが1時間で期限切れするため。
   };
 }
 

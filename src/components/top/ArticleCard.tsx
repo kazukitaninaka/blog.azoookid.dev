@@ -1,17 +1,17 @@
 import Link from "next/link";
 import * as styles from "./ArticleCard.css";
-import { Article } from "../../types";
 import React from "react";
 import Thumbnail from "./Thumbnail";
+import { Article } from "../../types";
 
 type Props = {
   article: Article;
 };
 
 const ArticleCard: React.VFC<Props> = ({ article }) => {
-  const { id, title, createdAt } = article;
+  const { slug, title, createdAt } = article;
   return (
-    <Link href={`article/${id}`}>
+    <Link href={`article/${slug}`}>
       <a>
         <div className={styles.container}>
           <Thumbnail src={article.thumbnail} />
