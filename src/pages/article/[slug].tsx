@@ -24,6 +24,8 @@ export default function Article({ article }: Props) {
     return <div>Loading...</div>;
   }
 
+  const hostName = "https://blog.azoookid.dev";
+
   return (
     <>
       <Head>
@@ -34,7 +36,7 @@ export default function Article({ article }: Props) {
           property="og:url"
           content={`https://blog.azoookid.dev/article/${article.slug}`}
         />
-        <meta property="og:image" content={article.thumbnail} />
+        <meta property="og:image" content={`${hostName}${article.thumbnail}`} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <ArticleComponent article={article} />
