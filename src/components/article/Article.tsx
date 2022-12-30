@@ -1,27 +1,69 @@
 import Tags from "../common/Tags";
-import { Tag, Block as TBlock } from "../../types";
 import * as styles from "./Article.css";
-import Block from "./Block";
+import ReactMarkdown from "react-markdown";
+import Image from "next/image";
 
 type Props = {
-  articleInfo: {
+  article: {
     title: string;
     createdAt: string;
-    tags: Tag[];
+    tags: string[];
+    thumbnail: string;
+    content: string;
+    slug: string;
   };
-  blocks: TBlock[];
 };
 
-const Article = ({ articleInfo, blocks }: Props) => {
+const components = {
+  p: (paragraph: { children?: boolean; node?: any }) => {
+    console.log(paragraph);
+    const { node } = paragraph;
+
+    if (node.children[0].tagName === "img") {
+      const image = node.children[0];
+      const metastring = image.properties.alt;
+      const alt = metastring?.replace(/ *\{[^)]*\} */g, "");
+      const isPriority = metastring?.toLowerCase().match("{priority}");
+      const hasCaption = metastring?.toLowerCase().includes("{caption:");
+      const caption = metastring?.match(/{caption: (.*?)}/)?.pop();
+
+      return (
+        <>
+          <div className={styles.imgWrapper}>
+            <Image
+              src={image.properties.src}
+              layout="fill"
+              objectFit="contain"
+              alt={alt}
+              priority={isPriority}
+            />
+          </div>
+          {hasCaption && (
+            <div className={styles.caption} aria-label={caption}>
+              {caption}
+            </div>
+          )}
+        </>
+      );
+    }
+    return <p>{paragraph.children}</p>;
+  },
+  ul: () => {
+    return <ul className={styles.ul} />;
+  },
+  li: () => {
+    return <ul className={styles.li} />;
+  },
+};
+
+const Article = ({ article }: Props) => {
   return (
-    <>
-      <h1 className={styles.title}>{articleInfo.title}</h1>
-      <p className={styles.publishedAt}>{articleInfo.createdAt}公開</p>
-      <Tags tags={articleInfo.tags} />
-      {blocks.map((block) => {
-        return <Block key={block.id} block={block} />;
-      })}
-    </>
+    <article>
+      <h1 className={styles.title}>{article.title}</h1>
+      <p className={styles.publishedAt}>{article.createdAt}公開</p>
+      <Tags tags={article.tags} />
+      <ReactMarkdown components={components}>{article.content}</ReactMarkdown>
+    </article>
   );
 };
 

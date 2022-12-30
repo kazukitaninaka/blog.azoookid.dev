@@ -1,16 +1,15 @@
 import Tag from "./Tag";
-import { Tag as TagType } from "../../types";
 import * as styles from "./Tags.css";
 
 type Props = {
-  tags: TagType[];
+  tags: string[];
 };
 
-const Tags = ({ tags }: Props) => {
+const Tags: React.VFC<Props> = ({ tags }) => {
   return (
     <div className={styles.container}>
       {tags.map((tag) => {
-        return <Tag tag={tag} key={tag.id} />;
+        return <Tag tag={tag} key={tag} />;
       })}
     </div>
   );
