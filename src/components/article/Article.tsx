@@ -1,7 +1,12 @@
 import Tags from "../common/Tags";
 import * as styles from "./Article.css";
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown, { Components } from "react-markdown";
 import Image from "next/image";
+import { PropsWithChildren } from "react";
+import {
+  OrderedListProps,
+  UnorderedListProps,
+} from "react-markdown/lib/ast-to-react";
 
 type Props = {
   article: {
@@ -14,14 +19,30 @@ type Props = {
   };
 };
 
-const components = {
-  p: (paragraph: { children?: boolean; node?: any }) => {
-    console.log(paragraph);
+const generateListValues = (
+  ulOrOl: PropsWithChildren<UnorderedListProps | OrderedListProps>
+) => {
+  const listValues = ulOrOl.node.children
+    .filter((li) => li.type === "element")
+    .map((li) => {
+      if (li.type === "element" && li.children[0].type === "text") {
+        return li.children[0].value;
+      }
+    });
+  return listValues;
+};
+
+const components: Components = {
+  p: (paragraph) => {
     const { node } = paragraph;
 
-    if (node.children[0].tagName === "img") {
+    if (
+      node.children[0].type === "element" &&
+      node.children[0].tagName === "img"
+    ) {
       const image = node.children[0];
-      const metastring = image.properties.alt;
+      console.log(image);
+      const metastring = image.properties.alt as string;
       const alt = metastring?.replace(/ *\{[^)]*\} */g, "");
       const isPriority = metastring?.toLowerCase().match("{priority}");
       const hasCaption = metastring?.toLowerCase().includes("{caption:");
@@ -31,11 +52,11 @@ const components = {
         <>
           <div className={styles.imgWrapper}>
             <Image
-              src={image.properties.src}
+              src={image.properties.src as string}
               layout="fill"
               objectFit="contain"
               alt={alt}
-              priority={isPriority}
+              priority={!!isPriority}
             />
           </div>
           {hasCaption && (
@@ -48,11 +69,37 @@ const components = {
     }
     return <p>{paragraph.children}</p>;
   },
-  ul: () => {
-    return <ul className={styles.ul} />;
+  ul: (ul) => {
+    const listValues = generateListValues(ul);
+
+    return (
+      <ul className={styles.ul}>
+        {listValues.map((value, i) => (
+          <li key={`${value}-${i}`} className={styles.li}>
+            {value}
+          </li>
+        ))}
+      </ul>
+    );
   },
-  li: () => {
-    return <ul className={styles.li} />;
+  ol: (ol) => {
+    const listValues = generateListValues(ol);
+
+    return (
+      <ol className={styles.ul}>
+        {listValues.map((value, i) => (
+          <li key={`${value}-${i}`} className={styles.li}>
+            {value}
+          </li>
+        ))}
+      </ol>
+    );
+  },
+  h2: (h2) => {
+    return <h2 className={styles.h2}>{h2.children[0]}</h2>;
+  },
+  h3: (h3) => {
+    return <h2 className={styles.h3}>{h3.children[0]}</h2>;
   },
 };
 
