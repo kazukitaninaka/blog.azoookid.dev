@@ -8,8 +8,7 @@ body {
 
 a {
   color: inherit;
-  /* aタグに下線がついてほしいのでコメントアウト */
-  /* text-decoration: none; */
+  text-decoration: none;
 }
 
 * {

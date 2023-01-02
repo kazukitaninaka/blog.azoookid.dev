@@ -34,6 +34,10 @@ export const h3 = style({
   },
 });
 
+export const a = style({
+  textDecoration: "underline",
+});
+
 export const caption = style({
   textAlign: "center",
   color: "#666",
