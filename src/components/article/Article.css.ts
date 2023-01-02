@@ -14,7 +14,7 @@ export const imgWrapper = style({
   position: "relative",
 });
 
-export const ul = style({
+export const listParent = style({
   listStylePosition: "inside",
 });
 

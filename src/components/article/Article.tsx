@@ -73,7 +73,7 @@ const components: Components = {
     const listValues = generateListValues(ul);
 
     return (
-      <ul className={styles.ul}>
+      <ul className={styles.listParent}>
         {listValues.map((value, i) => (
           <li key={`${value}-${i}`} className={styles.li}>
             {value}
@@ -86,7 +86,7 @@ const components: Components = {
     const listValues = generateListValues(ol);
 
     return (
-      <ol className={styles.ul}>
+      <ol className={styles.listParent}>
         {listValues.map((value, i) => (
           <li key={`${value}-${i}`} className={styles.li}>
             {value}
