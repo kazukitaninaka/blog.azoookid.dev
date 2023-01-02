@@ -37,6 +37,7 @@ const components: Components = {
   p: (paragraph) => {
     const { node } = paragraph;
 
+    // imgタグをnext/imageに置き換える
     if (
       node.children[0].type === "element" &&
       node.children[0].tagName === "img"
