@@ -5,7 +5,7 @@ export const container = style({
   gridTemplateRows: "auto 1fr auto",
   gridTemplateColumns: "100%",
   minHeight: "100vh",
-  gap: "30px",
+  gap: "20px",
 });
 
 export const mainContainer = style({
@@ -14,7 +14,7 @@ export const mainContainer = style({
   margin: "0 auto",
   "@media": {
     "screen and (max-width: 750px)": {
-      margin: "0 10px",
+      padding: "0 10px",
     },
   },
 });
