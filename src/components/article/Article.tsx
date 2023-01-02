@@ -106,7 +106,7 @@ const Article = ({ article }: Props) => {
   return (
     <article>
       <h1 className={styles.title}>{article.title}</h1>
-      <p className={styles.publishedAt}>{article.createdAt}公開</p>
+      <p className={styles.publishedAt}>{article.createdAt}</p>
       <Tags tags={article.tags} />
       <ReactMarkdown components={components}>{article.content}</ReactMarkdown>
     </article>

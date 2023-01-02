@@ -17,7 +17,7 @@ const ArticleCard: React.VFC<Props> = ({ article }) => {
           <Thumbnail src={article.thumbnail} />
           <div>
             <div className={styles.title}>{title}</div>
-            <div>{createdAt}公開</div>
+            <div>{createdAt}</div>
           </div>
         </div>
       </a>
