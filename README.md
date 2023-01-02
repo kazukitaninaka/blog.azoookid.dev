@@ -2,7 +2,7 @@
 
 build with Next.js, TypeScript, vanilla-extract, react-markdown, and so on.
 
-## Add a new article
+## To add a new article
 
 run the following command
 
