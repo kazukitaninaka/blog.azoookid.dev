@@ -7,6 +7,7 @@ import {
   OrderedListProps,
   UnorderedListProps,
 } from "react-markdown/lib/ast-to-react";
+import remarkGfm from "remark-gfm";
 
 type Props = {
   article: {
@@ -108,7 +109,9 @@ const Article = ({ article }: Props) => {
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.publishedAt}>{article.createdAt}</p>
       <Tags tags={article.tags} />
-      <ReactMarkdown components={components}>{article.content}</ReactMarkdown>
+      <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
+        {article.content}
+      </ReactMarkdown>
     </article>
   );
 };

@@ -40,19 +40,3 @@ export const caption = style({
   fontSize: "0.8rem",
   marginTop: "0.5rem",
 });
-// export const markdownStyles = style({});
-
-// globalStyle(
-//   `${markdownStyles} p, ${markdownStyles} blockquote, ${markdownStyles} ul, ${markdownStyles} ol, ${markdownStyles} li`,
-//   {
-//     margin: "1rem 0",
-//   }
-// );
-
-// globalStyle(`${markdownStyles} ul`, {
-//   listStylePosition: "inside",
-// });
-
-// globalStyle(`${markdownStyles} ul li`, {
-//   paddingLeft: "0.5em",
-// });
