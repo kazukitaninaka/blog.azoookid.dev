@@ -2,6 +2,7 @@ import ArticleComponent from "../../components/article/Article";
 import Head from "next/head";
 import { getAllArticles, getArticleBySlug } from "../../lib/api";
 import { useRouter } from "next/router";
+import usePageViews from "../../hooks/usePageViews";
 
 type Props = {
   article: {
@@ -16,6 +17,7 @@ type Props = {
 
 export default function Article({ article }: Props) {
   const router = useRouter();
+  usePageViews();
   if (!router.isFallback && !article?.slug) {
     return <div>404</div>;
   }

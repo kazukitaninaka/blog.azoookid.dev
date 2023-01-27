@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import ArticleCard from "../components/top/ArticleCard";
+import usePageViews from "../hooks/usePageViews";
 import { getAllArticles } from "../lib/api";
 import { Article } from "../types";
 
@@ -10,6 +11,7 @@ type Props = {
 
 const Home: NextPage<Props> = ({ articles }) => {
   const title = "blog.azoookid.dev";
+  usePageViews();
   return (
     <>
       <Head>

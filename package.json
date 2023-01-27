@@ -18,6 +18,7 @@
     "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
+    "@types/gtag.js": "^0.0.12",
     "@types/node": "17.0.8",
     "@types/react": "17.0.38",
     "@vanilla-extract/next-plugin": "^2.1.1",
