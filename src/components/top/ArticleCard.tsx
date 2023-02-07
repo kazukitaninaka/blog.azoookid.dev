@@ -11,16 +11,14 @@ type Props = {
 const ArticleCard: React.VFC<Props> = ({ article }) => {
   const { slug, title, createdAt } = article;
   return (
-    <Link href={`article/${slug}`}>
-      <a>
-        <div className={styles.container}>
-          <Thumbnail src={article.thumbnail} />
-          <div>
-            <div className={styles.title}>{title}</div>
-            <div>{createdAt}</div>
-          </div>
+    <Link href={`article/${slug}`} passHref>
+      <div className={styles.container}>
+        <Thumbnail src={article.thumbnail} />
+        <div>
+          <div className={styles.title}>{title}</div>
+          <div>{createdAt}</div>
         </div>
-      </a>
+      </div>
     </Link>
   );
 };
