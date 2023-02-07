@@ -56,10 +56,12 @@ const components: Components = {
           <div className={styles.imgWrapper}>
             <Image
               src={image.properties.src as string}
-              layout="fill"
-              objectFit="contain"
+              fill
               alt={alt}
               priority={!!isPriority}
+              style={{
+                objectFit: "contain",
+              }}
             />
           </div>
           {hasCaption && (
