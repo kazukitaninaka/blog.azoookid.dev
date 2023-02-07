@@ -13,7 +13,7 @@ const Tag: React.VFC<Props> = ({ tag }) => {
     //   <a>
     <div className={styles.container}>
       <div className={styles.imageContainer}>
-        <Image src="/icons/tag-solid.svg" alt="tag icon" layout="fill" />
+        <Image src="/icons/tag-solid.svg" alt="tag icon" fill />
       </div>
       <span>{tag}</span>
     </div>

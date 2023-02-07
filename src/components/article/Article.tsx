@@ -9,6 +9,7 @@ import {
 } from "react-markdown/lib/ast-to-react";
 import remarkGfm from "remark-gfm";
 import { style } from "@vanilla-extract/css";
+import Link from "next/link";
 
 type Props = {
   article: {
@@ -55,10 +56,12 @@ const components: Components = {
           <div className={styles.imgWrapper}>
             <Image
               src={image.properties.src as string}
-              layout="fill"
-              objectFit="contain"
+              fill
               alt={alt}
               priority={!!isPriority}
+              style={{
+                objectFit: "contain",
+              }}
             />
           </div>
           {hasCaption && (
@@ -105,16 +108,16 @@ const components: Components = {
   },
   a: (a) => {
     return (
-      <a href={a.href} className={styles.a} target="_blank" rel="noreferrer">
+      <Link href={a.href} className={styles.a} target="_blank" rel="noreferrer">
         {a.children[0]}
-      </a>
+      </Link>
     );
   },
 };
 
 const Article = ({ article }: Props) => {
   return (
-    <article>
+    <article className={styles.article}>
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.publishedAt}>{article.createdAt}</p>
       <Tags tags={article.tags} />

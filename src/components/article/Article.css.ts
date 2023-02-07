@@ -1,5 +1,8 @@
 import { style } from "@vanilla-extract/css";
 
+export const article = style({
+  lineHeight: "1.6",
+});
 export const title = style({
   textAlign: "center",
 });
