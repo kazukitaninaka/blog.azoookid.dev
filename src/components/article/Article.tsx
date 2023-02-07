@@ -117,7 +117,7 @@ const components: Components = {
 
 const Article = ({ article }: Props) => {
   return (
-    <article>
+    <article className={styles.article}>
       <h1 className={styles.title}>{article.title}</h1>
       <p className={styles.publishedAt}>{article.createdAt}</p>
       <Tags tags={article.tags} />
