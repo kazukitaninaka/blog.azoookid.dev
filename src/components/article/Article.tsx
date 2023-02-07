@@ -9,6 +9,7 @@ import {
 } from "react-markdown/lib/ast-to-react";
 import remarkGfm from "remark-gfm";
 import { style } from "@vanilla-extract/css";
+import Link from "next/link";
 
 type Props = {
   article: {
@@ -105,9 +106,9 @@ const components: Components = {
   },
   a: (a) => {
     return (
-      <a href={a.href} className={styles.a} target="_blank" rel="noreferrer">
+      <Link href={a.href} className={styles.a} target="_blank" rel="noreferrer">
         {a.children[0]}
-      </a>
+      </Link>
     );
   },
 };
