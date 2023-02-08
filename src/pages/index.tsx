@@ -25,7 +25,13 @@ const Home: NextPage<Props> = ({ articles }) => {
 };
 
 export async function getStaticProps() {
-  const articles = getAllArticles(["title", "createdAt", "thumbnail", "slug"]);
+  const articles = getAllArticles([
+    "title",
+    "createdAt",
+    "thumbnail",
+    "slug",
+    "isPublished",
+  ]);
   return {
     props: {
       articles,
