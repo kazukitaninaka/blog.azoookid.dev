@@ -1,8 +1,13 @@
 import ArticleComponent from "../../components/article/Article";
 import Head from "next/head";
-import { getAllArticles, getArticleBySlug } from "../../lib/api";
+import {
+  getAdjacentPosts,
+  getAllArticles,
+  getArticleBySlug,
+} from "../../lib/api";
 import { useRouter } from "next/router";
 import usePageViews from "../../hooks/usePageViews";
+import { Article as TArticle } from "../../types";
 
 type Props = {
   article: {
@@ -12,6 +17,8 @@ type Props = {
     thumbnail: string;
     content: string;
     slug: string;
+    nextArticle: TArticle | null;
+    prevArticle: TArticle | null;
   };
 };
 
@@ -75,9 +82,15 @@ export async function getStaticProps({ params }: Params) {
     "content",
   ]);
 
+  const { next, prev } = getAdjacentPosts(slug);
+
   return {
     props: {
-      article,
+      article: {
+        ...article,
+        nextArticle: next,
+        prevArticle: prev,
+      },
     },
   };
 }

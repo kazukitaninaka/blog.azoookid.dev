@@ -39,9 +39,25 @@ export function getArticleBySlug(slug: string, fields: string[] = []) {
 
 export function getAllArticles(fields: string[] = []) {
   const slugs = getArticleSlugs();
-  const posts = slugs
-    .map((slug) => getArticleBySlug(slug, fields))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.createdAt > post2.createdAt ? -1 : 1));
+  let allPosts = slugs.map((slug) => getArticleBySlug(slug, fields));
+
+  if (process.env.NODE_ENV === "production") {
+    // filter out posts that are not published yet
+    allPosts = allPosts.filter((post) => {
+      return post.isPublished !== "false";
+    });
+  }
+  // sort posts by date in descending order
+  const posts = allPosts.sort((post1, post2) =>
+    post1.createdAt > post2.createdAt ? -1 : 1
+  );
   return posts;
+}
+
+export function getAdjacentPosts(slug: string) {
+  const posts = getAllArticles(["slug", "title"]);
+  const index = posts.findIndex((post) => post.slug === slug);
+  const prev = posts[index - 1] || null;
+  const next = posts[index + 1] || null;
+  return { prev, next };
 }
