@@ -37,15 +37,18 @@ export function getArticleBySlug(slug: string, fields: string[] = []) {
   return items;
 }
 
-export function getAllArticles(fields: string[] = []) {
+export function getAllArticles(fields: string[] = ["isPublished"]) {
   const slugs = getArticleSlugs();
-  let allPosts = slugs.map((slug) => getArticleBySlug(slug, fields));
+  let allPosts = slugs.map((slug) =>
+    getArticleBySlug(slug, ["isPublished", ...fields])
+  );
 
   if (process.env.NODE_ENV === "production") {
     // filter out posts that are not published yet
     allPosts = allPosts.filter((post) => {
       return post.isPublished !== "false";
     });
+    console.log({ allPosts });
   }
   // sort posts by date in descending order
   const posts = allPosts.sort((post1, post2) =>
