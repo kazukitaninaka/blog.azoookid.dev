@@ -53,3 +53,11 @@ export function getAllArticles(fields: string[] = []) {
   );
   return posts;
 }
+
+export function getAdjacentPosts(slug: string) {
+  const posts = getAllArticles(["slug", "title"]);
+  const index = posts.findIndex((post) => post.slug === slug);
+  const prev = posts[index - 1] || null;
+  const next = posts[index + 1] || null;
+  return { prev, next };
+}

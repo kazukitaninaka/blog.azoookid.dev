@@ -8,8 +8,9 @@ import {
   UnorderedListProps,
 } from "react-markdown/lib/ast-to-react";
 import remarkGfm from "remark-gfm";
-import { style } from "@vanilla-extract/css";
 import Link from "next/link";
+import AdjacentArticles from "./AdjacentArticles";
+import { Article } from "../../types";
 
 type Props = {
   article: {
@@ -19,6 +20,8 @@ type Props = {
     thumbnail: string;
     content: string;
     slug: string;
+    nextArticle: Article | null;
+    prevArticle: Article | null;
   };
 };
 
@@ -124,6 +127,10 @@ const Article = ({ article }: Props) => {
       <ReactMarkdown components={components} remarkPlugins={[remarkGfm]}>
         {article.content}
       </ReactMarkdown>
+      <AdjacentArticles
+        prevArticle={article.prevArticle}
+        nextArticle={article.nextArticle}
+      />
     </article>
   );
 };
