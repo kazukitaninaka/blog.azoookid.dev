@@ -1,6 +1,6 @@
 ## My personal blog
 
-build with Next.js, TypeScript, vanilla-extract, react-markdown, and so on.
+built with Next.js, TypeScript, vanilla-extract, react-markdown, and so on.
 
 ## To add a new article
 
