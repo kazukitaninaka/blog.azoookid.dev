@@ -48,7 +48,6 @@ export function getAllArticles(fields: string[] = ["isPublished"]) {
     allPosts = allPosts.filter((post) => {
       return post.isPublished !== "false";
     });
-    console.log({ allPosts });
   }
   // sort posts by date in descending order
   const posts = allPosts.sort((post1, post2) =>
